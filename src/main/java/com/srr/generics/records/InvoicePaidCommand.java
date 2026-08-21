@@ -1,4 +1,5 @@
 package com.srr.generics.records;
 
-public class InvoicePaidCommand {
-}
+import com.srr.generics.interfaces.Command;
+
+public record InvoicePaidCommand (String invoiceId, double amount) implements Command {}

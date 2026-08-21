@@ -1,4 +1,7 @@
 package com.srr.generics.interfaces;
 
-public class CommandHandlerWrapper {
+import java.util.concurrent.ExecutorService;
+
+public interface CommandHandlerWrapper {
+    void handleAsync(Command command, ExecutorService executor);
 }

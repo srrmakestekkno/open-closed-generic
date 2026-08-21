@@ -1,4 +1,4 @@
 package com.srr.generics.interfaces;
 
-public interface ICommand {
+public interface Command {
 }

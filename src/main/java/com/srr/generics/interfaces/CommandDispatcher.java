@@ -1,4 +1,5 @@
 package com.srr.generics.interfaces;
 
-public class CommandDispatcher {
+public interface CommandDispatcher {
+    void dispatchAsync(Command command);
 }

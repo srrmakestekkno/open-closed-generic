@@ -2,21 +2,27 @@ package com.srr.generics.classes;
 
 import com.srr.generics.interfaces.Command;
 import com.srr.generics.interfaces.CommandHandler;
+import com.srr.generics.interfaces.CommandHandlerWrapper;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
-public class CommandHandlerWrapper<T extends Command> implements CommandHandlerWrapper {
+public class CommandHandlerWrapperImpl<T extends Command> implements CommandHandlerWrapper {
     private final List<CommandHandler<T>> handlers;
 
-    public CommandHandlerWrapper(List<CommandHandler<T>> handlers) {
+    public CommandHandlerWrapperImpl(List<CommandHandler<T>> handlers) {
         this.handlers = handlers;
     }
 
     @Override
-    public void handleAsync(Command command) {
+    @SuppressWarnings("unchecked")
+    public void handleAsync(Command command, ExecutorService executor) {
+        // Safe cast: Dispatcher garanterer match mellom Command og Wrapper
         T typedCommand = (T) command;
+
+        // Hver enkelt handler sendes til hver sin egen Virtuelle Tråd!
         for (CommandHandler<T> handler : handlers) {
-            handler.handleAsync(typedCommand);
+            executor.submit(() -> handler.handle(typedCommand));
         }
     }
 }
