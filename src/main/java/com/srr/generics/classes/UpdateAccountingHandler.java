@@ -5,7 +5,7 @@ import com.srr.generics.records.InvoicePaidCommand;
 
 public class UpdateAccountingHandler implements CommandHandler<InvoicePaidCommand> {
     @Override
-    public void handleAsync(InvoicePaidCommand command) {
+    public void handle(InvoicePaidCommand command) {
         System.out.println("[Handler 2] Updates accounting for amount: " + command.amount());
         try {
             Thread.sleep(500);

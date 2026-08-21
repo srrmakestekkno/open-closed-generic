@@ -14,7 +14,7 @@ import java.util.List;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     static void main() {
-        System.out.println("Staring integrations service...");
+        System.out.println("Starting integrations service...");
 
         // create dispatcher
         CommandDispatcherImpl dispatcher = new CommandDispatcherImpl();
@@ -32,7 +32,7 @@ public class Main {
         // send the command
         System.out.println("Sending command to dispatcher...");
         dispatcher.dispatchAsync(command);
-        System.out.println("Command snet. (main thread continues");
+        System.out.println("Command sent. (main thread continues");
 
         dispatcher.shutdown();
     }

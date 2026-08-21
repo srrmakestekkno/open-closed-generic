@@ -14,10 +14,10 @@ import java.util.concurrent.Executors;
 public class CommandDispatcherImpl implements CommandDispatcher {
     private final Map<Class<? extends Command>, CommandHandlerWrapper> wrappers = new ConcurrentHashMap<>();
 
-    // Bruker Java Virtual Threads for ekte parallell asynkron kjøring
+    // uses java virtual threads for real paralell async
     private final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
 
-    // Registrer handlere
+    // register handlers
     public <T extends Command> void registerHandlers(Class<T> commandType, List<CommandHandler<T>> handlers) {
         wrappers.put(commandType, new CommandHandlerWrapperImpl<>(handlers));
     }
@@ -30,11 +30,11 @@ public class CommandDispatcherImpl implements CommandDispatcher {
             throw new IllegalArgumentException("Ingen handlere registrert for: " + command.getClass().getSimpleName());
         }
 
-        // Sender med executor så wrapperen kan spinne opp en tråd per handler
+        // send executor so wrapper can spin up a thread per handler
         wrapper.handleAsync(command, executor);
     }
 
-    // Rydder opp tråd-poolen ved avslutning
+    // clean opp thread-pool when finish
     public void shutdown() {
         executor.shutdown();
     }

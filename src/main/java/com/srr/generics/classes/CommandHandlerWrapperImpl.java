@@ -17,10 +17,10 @@ public class CommandHandlerWrapperImpl<T extends Command> implements CommandHand
     @Override
     @SuppressWarnings("unchecked")
     public void handleAsync(Command command, ExecutorService executor) {
-        // Safe cast: Dispatcher garanterer match mellom Command og Wrapper
+        // Safe cast: Dispatcher guarantees match between Command and Wrapper
         T typedCommand = (T) command;
 
-        // Hver enkelt handler sendes til hver sin egen Virtuelle Tråd!
+        // each handler is sent to their own virtual thread
         for (CommandHandler<T> handler : handlers) {
             executor.submit(() -> handler.handle(typedCommand));
         }
